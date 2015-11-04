@@ -4,9 +4,19 @@ public class Box {
 	private final BoxType type;
 	private final int serialNo;
 
+
 	public Box(BoxType type, int serialNo) {
 		this.type = type;
 		this.serialNo = serialNo;
+	}
+
+
+	public BoxType getType() {
+		return type;
+	}
+
+	public int getSerialNo() {
+		return serialNo;
 	}
 
 }
