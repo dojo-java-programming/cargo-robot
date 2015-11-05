@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 public class Crane {
 	private final Logger logger = LoggerFactory.getLogger(Crane.class);
-	private final int railLength;
 	private int location;
 	private final int locationMin = 0;
 	private final int locationMax;
@@ -28,7 +27,6 @@ public class Crane {
 					+ (railLength - 1) + "'");
 		}
 		this.warehouse = warehouse;
-		this.railLength = railLength;
 		this.location = locationOnRail;
 		this.locationMax = railLength -1;
 	}
@@ -51,10 +49,6 @@ public class Crane {
 		++location;
 	}
 
-
-	private int getLocation() {
-		return location;
-	}
 
 	public void moveDown() {
 		if (box == null) {
