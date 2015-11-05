@@ -51,4 +51,26 @@ public class ColumnTest {
 		column.put(box2);
 	}
 
+	@Test
+	public void peekHeight() throws Exception {
+		Box box0 = new Box(BoxType.A, 0);
+		Box box1 = new Box(BoxType.A, 1);
+		Box box2 = new Box(BoxType.A, 2);
+		
+		Column column = new Column(3);
+		assertNull(column.peek(0), "No box expected at height '0'");
+
+		column.put(box0);
+		assertEquals(column.peek(0), box0);
+		assertNull(column.peek(1), "No box expected at height '1'");
+		
+		column.put(box1);
+		assertEquals(column.peek(0), box0);
+		assertEquals(column.peek(1), box1);
+
+		column.put(box2);
+		assertEquals(column.peek(0), box0);
+		assertEquals(column.peek(1), box1);
+		assertEquals(column.peek(2), box2);
+	}
 }

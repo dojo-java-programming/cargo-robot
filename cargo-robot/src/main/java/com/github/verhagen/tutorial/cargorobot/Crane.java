@@ -47,8 +47,7 @@ public class Crane {
 
 		++location;
 	}
-	
-	
+
 
 	private int getLocation() {
 		return location;

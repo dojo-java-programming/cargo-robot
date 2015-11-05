@@ -32,4 +32,23 @@ public class Column {
 		return boxes.pop();
 	}
 
+
+	public Box peek(int heigth) {
+		System.out.println("size " + boxes.size() + " h: " + heigth);
+		if (boxes.isEmpty()) {
+			return null;
+		}
+		if (heigth >= boxes.size()) {
+			return null;
+		}
+		Box box = boxes.get(convertHeigthAsIndex(heigth));
+		System.out.println("Peek[" + heigth + "] box " + box.getType());
+		return box;
+	}
+
+
+	private int convertHeigthAsIndex(int heigth) {
+		return boxes.size() -1 - heigth;
+	}
+
 }
