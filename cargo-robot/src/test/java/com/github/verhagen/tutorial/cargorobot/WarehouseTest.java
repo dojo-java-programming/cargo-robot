@@ -36,9 +36,13 @@ public class WarehouseTest {
 		String content = warehouse.toString();
 		Assert.assertEquals(content, bldr.toString());
 		
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("D");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  '1'");
 		warehouse.execute("R");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '1'");
 		warehouse.execute("D");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
 		content = warehouse.toString();
 		Assert.assertEquals(content, expected.toString());
 		

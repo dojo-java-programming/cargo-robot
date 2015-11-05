@@ -65,5 +65,18 @@ public class Crane {
 			box = null;
 		}
 	}
-	
+
+	@Override
+	public String toString() {
+		StringBuilder bldr = new StringBuilder();
+		bldr.append("location '").append(location).append("'  ");
+		if (box == null) {
+			bldr.append("no box");
+		}
+		else {
+			bldr.append("box: '").append(box.getType()).append("'  '").append(box.getSerialNo()).append("'");
+		}
+		return bldr.toString();
+	}
+
 }

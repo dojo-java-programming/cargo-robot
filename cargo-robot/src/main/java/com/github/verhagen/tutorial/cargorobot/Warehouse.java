@@ -138,4 +138,8 @@ public class Warehouse {
 		return columns[location].isCapacityAvailable();
 	}
 
+	public String getCraneStatus() {
+		return crane.toString();
+	}
+
 }
