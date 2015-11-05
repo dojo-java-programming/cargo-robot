@@ -11,6 +11,12 @@ public class Column {
 		this.capacity = capacity;
 		boxes = new LinkedList<Box>();
 	}
+	
+
+	/** Clears the column, remove all boxes.*/
+	public void clear() {
+		boxes.clear();
+	}
 
 
 	public void put(Box box) {
@@ -34,7 +40,7 @@ public class Column {
 
 
 	public Box peek(int heigth) {
-		System.out.println("size " + boxes.size() + " h: " + heigth);
+		System.out.println("No of boxes " + boxes.size() + " h: " + heigth);
 		if (boxes.isEmpty()) {
 			return null;
 		}
@@ -49,6 +55,11 @@ public class Column {
 
 	private int convertHeigthAsIndex(int heigth) {
 		return boxes.size() -1 - heigth;
+	}
+
+
+	public int getCapacity() {
+		return capacity;
 	}
 
 }

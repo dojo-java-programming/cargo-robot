@@ -1,5 +1,6 @@
 package com.github.verhagen.tutorial.cargorobot;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
 
@@ -8,16 +9,12 @@ import org.slf4j.LoggerFactory;
 
 public class Warehouse {
 	private final Logger logger = LoggerFactory.getLogger(Warehouse.class);
-	private final int width;
-	private final int heigth;
 	private final String originalFilling;
 	private final Crane crane;
 	private final Column[] columns;
 
 	
 	public Warehouse(int width, int heigth, String filling) {
-		this.width = width;
-		this.heigth = heigth;
 		this.originalFilling = filling;
 
 		crane = new Crane(width);
@@ -26,7 +23,27 @@ public class Warehouse {
 			columns[columnNo] = new Column(heigth);
 		}
 
-		StringTokenizer tokenizer = new StringTokenizer(filling, "\n");
+		reset();
+	}
+	
+	
+	/**
+	 * Clears the warehouse, so it will not contain any Box.
+	 */
+	public void clear() {
+		for (int columnNo = 0; columnNo < columns.length; columnNo++) {
+			columns[columnNo].clear();
+		}
+	}
+
+
+	/**
+	 * Resets the warehouse content (filling).
+	 */
+	private void reset() {
+		clear();
+
+		StringTokenizer tokenizer = new StringTokenizer(originalFilling, "\n");
 		LinkedList<String> rows = new LinkedList<>(); 
 		while (tokenizer.hasMoreTokens()) {
 			String row = tokenizer.nextToken();
@@ -34,14 +51,14 @@ public class Warehouse {
 		}
 		
 		for (String row : rows) {
-			for (int index = 0; index < width; index++) {
+			for (int index = 0; index < columns.length; index++) {
 				if (index >= row.length()) {
 					logger.warn("Given row '"+ row + "' is shorter then defined width.");
 					continue;
 				}
 				
 				String boxTypeStr = row.substring(index, index + 1);
-				if (! boxTypeStr.equals(" ")) {
+				if (! boxTypeStr.equals(".")) {
 					try {
 						BoxType boxType = BoxType.valueOf(boxTypeStr.toUpperCase());
 						Box box = BoxFactory.create(boxType);
@@ -58,20 +75,34 @@ public class Warehouse {
 
 	@Override
 	public String toString() {
-		StringBuilder bldr = new StringBuilder();
-		for (int rowNo = 0; rowNo < heigth; rowNo++) {
+		LinkedList<String> rows = new LinkedList<>();
+		for (int rowNo = 0; rowNo < getHeigth(); rowNo++) {
+			StringBuilder bldr = new StringBuilder();
 			for (int columnNo = 0; columnNo < columns.length; columnNo++) {
-				Box box = columns[columnNo].peek(heigth);
+				Box box = columns[columnNo].peek(rowNo);
 				if (box == null) {
-					bldr.append(" ");
+					bldr.append(".");
 				}
 				else {
 					bldr.append(box.getType().name());
 				}
 			}
 			bldr.append("\n");
+			rows.add(bldr.toString());
+		}
+		
+		// Reverses the list internally
+		Collections.reverse(rows);
+		StringBuilder bldr = new StringBuilder();
+		for (String row : rows) {
+			bldr.append(row);
 		}
 		return bldr.toString();
+	}
+
+
+	private int getHeigth() {
+		return columns[0].getCapacity();
 	}
 
 }
