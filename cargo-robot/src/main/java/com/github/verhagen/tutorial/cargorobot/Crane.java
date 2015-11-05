@@ -9,13 +9,15 @@ public class Crane {
 	private int location;
 	private final int locationMin = 0;
 	private final int locationMax;
+	private final Warehouse warehouse;
+	private Box box;
 
 
-	public Crane(int railLength) {
-		this(railLength, 0);
+	public Crane(Warehouse warehouse, int railLength) {
+		this(warehouse, railLength, 0);
 	}
 
-	public Crane(int railLength, int locationOnRail) {
+	public Crane(Warehouse warehouse, int railLength, int locationOnRail) {
 		if (locationOnRail < 0) {
 			throw new IllegalArgumentException("Argument 'locationOnRail', with value '" + 
 					locationOnRail + "' is before start of rail. The rail starts at '0'.");
@@ -25,6 +27,7 @@ public class Crane {
 					locationOnRail + "' is beyound end of rail. The rail end at '"
 					+ (railLength - 1) + "'");
 		}
+		this.warehouse = warehouse;
 		this.railLength = railLength;
 		this.location = locationOnRail;
 		this.locationMax = railLength -1;
@@ -54,8 +57,13 @@ public class Crane {
 	}
 
 	public void moveDown() {
-		// TODO Auto-generated method stub
-		
+		if (box == null) {
+			box = warehouse.getBox(location);
+		}
+		else if (warehouse.isCapacityAvailable(location)) {
+			warehouse.putBox(location, box);
+			box = null;
+		}
 	}
 	
 }

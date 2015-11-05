@@ -23,7 +23,7 @@ public class Column {
 		if (box == null) { 
 			return;
 		}
-		if (boxes.size() >= capacity) {
+		if (! isCapacityAvailable()) {
 			throw new ColumnCapacityException("Column capacity '" + capacity + "' is already reached.");
 		}
 
@@ -60,6 +60,16 @@ public class Column {
 
 	public int getCapacity() {
 		return capacity;
+	}
+
+
+	public int availableCapacity() {
+		return capacity - boxes.size();
+	}
+
+
+	public boolean isCapacityAvailable() {
+		return (capacity - boxes.size()) > 0;
 	}
 
 }

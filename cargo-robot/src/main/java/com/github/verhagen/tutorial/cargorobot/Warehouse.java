@@ -17,11 +17,11 @@ public class Warehouse {
 	public Warehouse(int width, int heigth, String filling) {
 		this.originalFilling = filling;
 
-		crane = new Crane(width);
 		columns = new Column[width];
 		for (int columnNo = 0; columnNo < width; columnNo++) {
 			columns[columnNo] = new Column(heigth);
 		}
+		crane = new Crane(this, width);
 
 		reset();
 	}
@@ -40,7 +40,7 @@ public class Warehouse {
 	/**
 	 * Resets the warehouse content (filling).
 	 */
-	private void reset() {
+	public void reset() {
 		clear();
 
 		StringTokenizer tokenizer = new StringTokenizer(originalFilling, "\n");
@@ -101,8 +101,41 @@ public class Warehouse {
 	}
 
 
-	private int getHeigth() {
+	public int getWidth() {
+		return columns.length;
+	}
+
+	public int getHeigth() {
 		return columns[0].getCapacity();
+	}
+
+	public void putBox(int colNo, Box box) {
+		columns[colNo].put(box);
+	}
+
+	public Box getBox(int colNo) {
+		return columns[colNo].get();
+	}
+
+	public void execute(final String commandStr) {
+		switch (commandStr) {
+			case "R":
+				crane.moveRight();
+				break;
+			case "L":
+				crane.moveLeft();
+				break;
+			case "D":
+				crane.moveDown();
+				break;
+			default:
+				logger.warn("The crane will ignore the given command '" + commandStr + "'.");
+		}
+	}
+
+
+	public boolean isCapacityAvailable(int location) {
+		return columns[location].isCapacityAvailable();
 	}
 
 }
