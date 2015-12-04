@@ -1,5 +1,10 @@
-/bin/
-/target/
-/.settings/
-/.classpath
-/.project
+# General
+tmp/
+
+# Maven configuration
+target/
+
+# Eclipse configuration
+.settings/
+.classpath
+.project
