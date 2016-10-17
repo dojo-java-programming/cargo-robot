@@ -4,7 +4,7 @@ public class BoxFactory {
 	private static int serialNo = 0;
 
 
-	public static Box create(BoxType type) {
+	public static Box create(final BoxType type) {
 		return new Box(type, serialNo++);
 	}
 

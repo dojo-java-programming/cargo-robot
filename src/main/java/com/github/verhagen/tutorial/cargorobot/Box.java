@@ -5,7 +5,7 @@ public class Box {
 	private final int serialNo;
 
 
-	public Box(BoxType type, int serialNo) {
+	public Box(final BoxType type, final int serialNo) {
 		this.type = type;
 		this.serialNo = serialNo;
 	}

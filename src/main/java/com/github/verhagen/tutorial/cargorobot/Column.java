@@ -7,7 +7,7 @@ public class Column {
 	private LinkedList<Box> boxes;
 
 
-	public Column(int capacity) {
+	public Column(final int capacity) {
 		this.capacity = capacity;
 		boxes = new LinkedList<Box>();
 	}
@@ -19,7 +19,7 @@ public class Column {
 	}
 
 
-	public void put(Box box) {
+	public void put(final Box box) {
 		if (box == null) { 
 			return;
 		}
@@ -39,7 +39,7 @@ public class Column {
 	}
 
 
-	public Box peek(int heigth) {
+	public Box peek(final int heigth) {
 		System.out.println("No of boxes " + boxes.size() + " h: " + heigth);
 		if (boxes.isEmpty()) {
 			return null;
