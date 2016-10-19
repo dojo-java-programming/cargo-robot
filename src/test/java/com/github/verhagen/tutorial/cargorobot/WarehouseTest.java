@@ -88,8 +88,7 @@ public class WarehouseTest {
 		int width = 2;
 		int heigth = 2;
 		StringBuilder bldr = new StringBuilder();
-		bldr.append(".B\n");
-		bldr.append("AB\n");
+		// TODO - Create initial filling
 
 		Warehouse warehouse = new Warehouse(width, heigth, bldr.toString());
 		assertEquals(warehouse.getWidth(), 2);
