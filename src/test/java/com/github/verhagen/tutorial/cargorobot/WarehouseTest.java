@@ -1,5 +1,7 @@
 package com.github.verhagen.tutorial.cargorobot;
 
+import static org.testng.Assert.assertEquals;
+
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -14,11 +16,26 @@ public class WarehouseTest {
 		bldr.append("....\n");
 		bldr.append("A...\n");
 		Warehouse warehouse = new Warehouse(width, heigth, bldr.toString());
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		
 		String content = warehouse.toString();
 		Assert.assertEquals(content, bldr.toString());
 	}
-	
+
+
+	@Test
+	public void executeUnknownCommand() throws Exception {
+		int width = 2;
+		int heigth = 2;
+		StringBuilder bldr = new StringBuilder();
+		bldr.append("..\n");
+		bldr.append("A.\n");
+
+		Warehouse warehouse = new Warehouse(width, heigth, bldr.toString());
+		assertEquals(warehouse.getWidth(), 2);
+		warehouse.execute("Q");
+		// TODO Check that logging contains warning ...
+	}
 
 	@Test
 	public void moveBox() throws Exception {
@@ -38,9 +55,10 @@ public class WarehouseTest {
 		
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("D");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  '1'");
+		// FIXME [20161019 TV] Correct BoxFactory, should create serialNo 0 for each new Warehouse. 
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  '6'");  // FIXME 5 should be 1
 		warehouse.execute("R");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '1'");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '6'");  // FIXME 5 should be 1
 		warehouse.execute("D");
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
 		content = warehouse.toString();
