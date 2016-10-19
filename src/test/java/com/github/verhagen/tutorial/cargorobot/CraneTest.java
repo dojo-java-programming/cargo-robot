@@ -18,7 +18,7 @@ public class CraneTest {
 	public void commandMoveLeft() throws Exception {
 		int railLength = 4;
 //		Crane crane = new Crane(warehouse, railLength, railLength -1);
-		Warehouse warehouse = new Warehouse(3, railLength, "   ");
+		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
 		warehouse.execute("L");
 	}
 
@@ -40,7 +40,7 @@ public class CraneTest {
 	@Test
 	public void commandDown() throws Exception {
 		int railLength = 1;
-		Warehouse warehouse = new Warehouse(1, railLength, "A");
+		Warehouse warehouse = new Warehouse(railLength, 1, "A");
 //		Crane crane = new Crane(warehouse, railLength);
 //		crane.moveDown();
 		warehouse.execute("D");

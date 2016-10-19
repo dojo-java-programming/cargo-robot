@@ -22,6 +22,17 @@ public class WarehouseTest {
 		Assert.assertEquals(content, bldr.toString());
 	}
 
+	@Test
+	public void createWarehouseIncorrectFilling() throws Exception {
+		int width = 4;
+		int heigth = 3;
+		StringBuilder bldr = new StringBuilder();
+		bldr.append("....\n");
+		bldr.append("..\n");
+		bldr.append("A...\n");
+		new Warehouse(width, heigth, bldr.toString());
+	}
+
 
 	@Test
 	public void executeUnknownCommand() throws Exception {
@@ -56,9 +67,9 @@ public class WarehouseTest {
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("D");
 		// FIXME [20161019 TV] Correct BoxFactory, should create serialNo 0 for each new Warehouse. 
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  '6'");  // FIXME 5 should be 1
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  '7'");  // FIXME 5 should be 1
 		warehouse.execute("R");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '6'");  // FIXME 5 should be 1
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '7'");  // FIXME 5 should be 1
 		warehouse.execute("D");
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
 		content = warehouse.toString();
@@ -69,6 +80,25 @@ public class WarehouseTest {
 		warehouse.execute("D");
 		content = warehouse.toString();
 		Assert.assertEquals(content, bldr.toString());
+	}
+
+
+	@Test
+	public void placeBoxInFullColumn() throws Exception {
+		int width = 2;
+		int heigth = 2;
+		StringBuilder bldr = new StringBuilder();
+		bldr.append(".B\n");
+		bldr.append("AB\n");
+
+		Warehouse warehouse = new Warehouse(width, heigth, bldr.toString());
+		assertEquals(warehouse.getWidth(), 2);
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		warehouse.execute("D");
+		warehouse.execute("R");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '8'");
+		warehouse.execute("D");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '8'");
 	}
 
 }
