@@ -1,5 +1,7 @@
 # Tutorial Cargo Robot
 
+<img  src="https://raw.githubusercontent.com/dojo-java-programming/cargo-robot/master/master/documentation/image/cargo-bot-level-easy-00.png" />
+
 
 ## Background
 
