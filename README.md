@@ -12,4 +12,4 @@ To get an idea of the App see some of the [videos](https://www.google.nl/search?
 
 ## TestNG
 
-This project used [TestNG](http://testng.org) as Unit Testing library. 
+This project uses [TestNG](http://testng.org) as Unit Testing library. 
