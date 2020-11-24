@@ -2,7 +2,11 @@ package com.github.verhagen.tutorial.cargorobot;
 
 import java.util.LinkedList;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Column {
+	private final Logger logger = LoggerFactory.getLogger(Column.class);
 	private final int capacity;
 	private LinkedList<Box> boxes;
 
@@ -40,7 +44,7 @@ public class Column {
 
 
 	public Box peek(final int heigth) {
-		System.out.println("No of boxes " + boxes.size() + " h: " + heigth);
+		logger.debug("No of boxes " + boxes.size() + " h: " + heigth);
 		if (boxes.isEmpty()) {
 			return null;
 		}
@@ -48,7 +52,7 @@ public class Column {
 			return null;
 		}
 		Box box = boxes.get(convertHeigthAsIndex(heigth));
-		System.out.println("Peek[" + heigth + "] box " + box.getType());
+		logger.debug("Peek[" + heigth + "] box " + box.getType());
 		return box;
 	}
 
