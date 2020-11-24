@@ -1,4 +1,4 @@
-package com.github.verhagen.tutorial.cargorobot;
+package com.github.verhagen.tutorial.cargorobot.core;
 
 public class BoxFactory {
 	private int serialNo = 0;

@@ -1,4 +1,4 @@
-package com.github.verhagen.tutorial.cargorobot;
+package com.github.verhagen.tutorial.cargorobot.core;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 import org.testng.annotations.Test;
