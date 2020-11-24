@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 public class CraneTest {
 	
 	@Test
-	public void commandMoveRight() throws Exception {
+	public void commandMoveRight() {
 		int railLength = 4;
 		Warehouse warehouse = new Warehouse(railLength, 3, "ABBA");
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
@@ -20,7 +20,7 @@ public class CraneTest {
 	}
 
 	@Test
-	public void commandMoveLeft() throws Exception {
+	public void commandMoveLeft() {
 		int railLength = 4;
 		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
@@ -30,6 +30,23 @@ public class CraneTest {
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 	}
 
+	@Test( expectedExceptions = { CraneException.class } )
+	public void commandTooFarLeft() throws Exception {
+		int railLength = 4;
+		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		warehouse.execute("L");
+	}
+	
+	@Test( expectedExceptions = { CraneException.class } )
+	public void commandTooRightLeft() throws Exception {
+		int railLength = 2;
+		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		warehouse.execute("RRR");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+	}
+	
 	@Test( expectedExceptions = { IllegalArgumentException.class } )
 	public void placeToFarLeft() throws Exception {
 		Warehouse warehouse = null;
@@ -46,7 +63,7 @@ public class CraneTest {
 	
 	
 	@Test
-	public void commandDown() throws Exception {
+	public void commandDown() {
 		int railLength = 1;
 		Warehouse warehouse = new Warehouse(railLength, 2, "A");
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");

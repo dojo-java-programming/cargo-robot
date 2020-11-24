@@ -120,18 +120,21 @@ public class Warehouse {
 	}
 
 	public void execute(final String commandStr) {
-		switch (commandStr) {
-			case "R":
-				crane.moveRight();
-				break;
-			case "L":
-				crane.moveLeft();
-				break;
-			case "D":
-				crane.moveDown();
-				break;
-			default:
-				logger.warn("The crane will ignore the given command '" + commandStr + "'.");
+		for (int index = 0; index < commandStr.length(); ++index) {
+			
+			switch (commandStr.charAt(index)) {
+				case 'R':
+					crane.moveRight();
+					break;
+				case 'L':
+					crane.moveLeft();
+					break;
+				case 'D':
+					crane.moveDown();
+					break;
+				default:
+					logger.warn("The crane will ignore the given command '" + commandStr.charAt(index) + "'.");
+			}
 		}
 	}
 

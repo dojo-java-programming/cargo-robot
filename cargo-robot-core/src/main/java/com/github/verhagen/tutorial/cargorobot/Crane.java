@@ -32,21 +32,17 @@ public class Crane {
 	}
 
 	public void moveLeft() {
-		if (location == locationMin) {
-			logger.warn("Can not move left.");
-			return;
-		}
-
 		--location;
+		if (location < locationMin) {
+			throw new CraneException("Crane is derailed on the left of it's rail.");
+		}
 	}
 
 	public void moveRight() {
-		if (location == locationMax) {
-			logger.warn("Can not move right.");
-			return;
-		}
-
 		++location;
+		if (location > locationMax) {
+			throw new CraneException("Crane is derailed on the right of it's rail.");
+		}
 	}
 
 
