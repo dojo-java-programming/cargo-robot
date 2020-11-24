@@ -3,6 +3,8 @@ package com.github.verhagen.tutorial.cargorobot.core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.verhagen.tutorial.cargorobot.CargoRobotFeatures;
+
 public class Crane {
 	private final Logger logger = LoggerFactory.getLogger(Crane.class);
 	private int location;
@@ -32,6 +34,12 @@ public class Crane {
 	}
 
 	public void moveLeft() {
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_MOVEMENT.isActive()) {
+			if (location == locationMin) {
+				logger.warn("Can not move left.");
+				return;
+			}
+		}
 		--location;
 		if (location < locationMin) {
 			throw new CraneException("Crane is derailed on the left of it's rail.");
@@ -39,6 +47,12 @@ public class Crane {
 	}
 
 	public void moveRight() {
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_MOVEMENT.isActive()) {
+			if (location == locationMax) {
+				logger.warn("Can not move right.");
+				return;
+			}
+		}
 		++location;
 		if (location > locationMax) {
 			throw new CraneException("Crane is derailed on the right of it's rail.");

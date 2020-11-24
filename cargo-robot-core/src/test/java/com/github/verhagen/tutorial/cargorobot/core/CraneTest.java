@@ -4,6 +4,8 @@ import static org.testng.Assert.assertEquals;
 
 import org.testng.annotations.Test;
 
+import com.github.verhagen.tutorial.cargorobot.CargoRobotFeatures;
+
 public class CraneTest {
 	
 	@Test
@@ -30,21 +32,46 @@ public class CraneTest {
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 	}
 
-	@Test( expectedExceptions = { CraneException.class } )
-	public void commandTooFarLeft() throws Exception {
+	@Test
+	public void commandTooFarLeft() {
 		int railLength = 4;
 		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
-		warehouse.execute("L");
+		
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_MOVEMENT.isActive()) {
+			warehouse.execute("L");
+			assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		}
+		else {
+			try {
+				warehouse.execute("L");
+			}
+			catch (CraneException ce) {
+				assertEquals(ce.getMessage(), "Crane is derailed on the left of it's rail.");		
+			}
+		}
 	}
 	
-	@Test( expectedExceptions = { CraneException.class } )
-	public void commandTooRightLeft() throws Exception {
-		int railLength = 2;
+	@Test
+	public void commandTooRightLeft() {
+		int railLength = 4;
 		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
 		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("RRR");
-		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		assertEquals(warehouse.getCraneStatus(), "location '3'  no box");
+
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_MOVEMENT.isActive()) {
+			warehouse.execute("R");
+			assertEquals(warehouse.getCraneStatus(), "location '3'  no box");
+		}
+		else {
+			try {
+				warehouse.execute("R");
+			}
+			catch (CraneException ce) {
+				assertEquals(ce.getMessage(), "Crane is derailed on the right of it's rail.");		
+			}
+		}
 	}
 	
 	@Test( expectedExceptions = { IllegalArgumentException.class } )
