@@ -2,6 +2,7 @@ package com.github.verhagen.tutorial.cargorobot.core;
 
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ public class Warehouse {
 	private final Crane crane;
 	private final Column[] columns;
 	private final BoxFactory boxFactory = new BoxFactory();
+	private final List<String> commandHistory = new LinkedList<>();
+	private final List<Character> commandEventHistory = new LinkedList<>();
 
 	
 	public Warehouse(int width, int heigth, String filling) {
@@ -43,6 +46,7 @@ public class Warehouse {
 	 */
 	public void reset() {
 		clear();
+		commandHistory.clear();
 //		boxFactory.reset();
 
 		StringTokenizer tokenizer = new StringTokenizer(originalFilling, "\n");
@@ -120,22 +124,37 @@ public class Warehouse {
 	}
 
 	public void execute(final String commandStr) {
+		commandHistory.add(commandStr);
 		for (int index = 0; index < commandStr.length(); ++index) {
-			
-			switch (commandStr.charAt(index)) {
-				case 'R':
-					crane.moveRight();
-					break;
-				case 'L':
-					crane.moveLeft();
-					break;
-				case 'D':
-					crane.moveDown();
-					break;
-				default:
-					logger.warn("The crane will ignore the given command '" + commandStr.charAt(index) + "'.");
-			}
+			execute(commandStr.charAt(index));
 		}
+	}
+			
+	public void execute(final Character command) {
+		switch (command) {
+			case 'R':
+				commandEventHistory.add(command);
+				crane.moveRight();
+				break;
+			case 'L':
+				commandEventHistory.add(command);
+				crane.moveLeft();
+				break;
+			case 'D':
+				commandEventHistory.add(command);
+				crane.moveDown();
+				break;
+			default:
+				logger.warn("The crane will ignore the given command '" + command + "'.");
+		}
+	}
+
+	public String getCommandHistory() {
+		StringBuilder bldr = new StringBuilder();
+		for (Character ch : commandEventHistory) {
+			bldr.append(ch);
+		}
+		return bldr.toString();
 	}
 
 

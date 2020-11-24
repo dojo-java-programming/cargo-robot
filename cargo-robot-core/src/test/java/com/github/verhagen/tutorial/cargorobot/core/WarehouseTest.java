@@ -104,6 +104,7 @@ public class WarehouseTest {
 			Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
 			warehouse.execute("LD");
 			Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+			assertEquals(warehouse.getCommandHistory(), "DRDLD");
 		}
 		else {
 			warehouse.execute("D");
@@ -124,7 +125,11 @@ public class WarehouseTest {
 			}
 
 			warehouse.execute("D");
-			Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
+			assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
+			assertEquals(warehouse.getCommandHistory(), "DRDLRD");
+			warehouse.execute("LD");
+			assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+			assertEquals(warehouse.getCommandHistory(), "DRDLRDLD");
 		}
 	}
 
