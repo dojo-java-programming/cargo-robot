@@ -6,12 +6,6 @@ import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.togglz.core.manager.FeatureManager;
-import org.togglz.core.manager.FeatureManagerBuilder;
-import org.togglz.core.repository.mem.InMemoryStateRepository;
-import org.togglz.core.user.NoOpUserProvider;
-
-import com.github.verhagen.tutorial.cargorobot.CargoRobotFeatures;
 
 public class Warehouse {
 	private final Logger logger = LoggerFactory.getLogger(Warehouse.class);
@@ -147,6 +141,9 @@ public class Warehouse {
 
 	public boolean isCapacityAvailable(int location) {
 		return columns[location].isCapacityAvailable();
+	}
+	public int getAvailableCapacity(int location) {
+		return columns[location].getAvailableCapacity();
 	}
 
 	public String getCraneStatus() {

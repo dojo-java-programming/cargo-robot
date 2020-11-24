@@ -5,6 +5,8 @@ import static org.testng.Assert.assertEquals;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.github.verhagen.tutorial.cargorobot.CargoRobotFeatures;
+
 public class WarehouseTest {
 
 	@Test
@@ -94,11 +96,36 @@ public class WarehouseTest {
 		Warehouse warehouse = new Warehouse(width, heigth, bldr.toString());
 		assertEquals(warehouse.getWidth(), 2);
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
-		warehouse.execute("D");
-		warehouse.execute("R");
+		warehouse.execute("DR");
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
-		warehouse.execute("D");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
+
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_STACKING_OF_BOXES.isActive()) {
+			warehouse.execute("D");
+			Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
+			warehouse.execute("LD");
+			Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		}
+		else {
+			warehouse.execute("D");
+			Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
+
+			try {
+				warehouse.execute("L");
+			}
+			catch (CraneException ce) {
+				assertEquals(ce.getMessage(), "Crane failure, too many boxes in current column.");
+			}
+
+			try {
+				warehouse.execute("R");
+			}
+			catch (CraneException ce) {
+				assertEquals(ce.getMessage(), "Crane failure, too many boxes in current column.");
+			}
+
+			warehouse.execute("D");
+			Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
+		}
 	}
 
 }

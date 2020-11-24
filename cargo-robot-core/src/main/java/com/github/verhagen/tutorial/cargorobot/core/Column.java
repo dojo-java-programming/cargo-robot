@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.github.verhagen.tutorial.cargorobot.CargoRobotFeatures;
+
 public class Column {
 	private final Logger logger = LoggerFactory.getLogger(Column.class);
 	private final int capacity;
@@ -27,10 +29,11 @@ public class Column {
 		if (box == null) { 
 			return;
 		}
-		if (! isCapacityAvailable()) {
-			throw new ColumnCapacityException("Column capacity '" + capacity + "' is already reached.");
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_STACKING_OF_BOXES.isActive()) {
+			if (! isCapacityAvailable()) {
+				throw new ColumnCapacityException("Column capacity '" + capacity + "' is already reached.");
+			}
 		}
-
 		boxes.push(box);
 	}
 
@@ -67,7 +70,7 @@ public class Column {
 	}
 
 
-	public int availableCapacity() {
+	public int getAvailableCapacity() {
 		return capacity - boxes.size();
 	}
 

@@ -33,12 +33,24 @@ public class Crane {
 		this.locationMax = railLength -1;
 	}
 
-	public void moveLeft() {
+	public boolean isMoveLeftPossible() {
 		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_MOVEMENT.isActive()) {
 			if (location == locationMin) {
-				logger.warn("Can not move left.");
-				return;
+				logger.warn("Can not move to the left, reached end of rail.");
+				return false;
 			}
+		}
+		if (! isMovePossible()) {
+			return false;
+		}
+		return true;
+	}
+	public void moveLeft() {
+		if (! isMoveLeftPossible()) {
+			return;
+		}
+		if (warehouse.getAvailableCapacity(location) < 0) {
+			throw new CraneException("Crane failure, too many boxes in current column.");
 		}
 		--location;
 		if (location < locationMin) {
@@ -46,27 +58,55 @@ public class Crane {
 		}
 	}
 
-	public void moveRight() {
+	public boolean isMoveRightPossible() {
 		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_MOVEMENT.isActive()) {
 			if (location == locationMax) {
-				logger.warn("Can not move right.");
-				return;
+				logger.warn("Can not move to the right, reached end of rail.");
+				return false;
 			}
+		}
+		if (! isMovePossible()) {
+			return false;
+		}
+		return true;
+	}
+	public void moveRight() {
+		if (! isMoveRightPossible()) {
+			return;
+		}
+		if (warehouse.getAvailableCapacity(location) < 0) {
+			throw new CraneException("Crane failure, too many boxes in current column.");
 		}
 		++location;
 		if (location > locationMax) {
 			throw new CraneException("Crane is derailed on the right of it's rail.");
 		}
 	}
-
+	private boolean isMovePossible() {
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_STACKING_OF_BOXES.isActive()) {
+			if (warehouse.getAvailableCapacity(location) < 0) {
+				logger.warn("Can not move, column overloaded with boxes.");
+				return false;
+			}
+		}
+		return true;
+	}
 
 	public void moveDown() {
 		if (box == null) {
 			box = warehouse.getBox(location);
 		}
-		else if (warehouse.isCapacityAvailable(location)) {
-			warehouse.putBox(location, box);
-			box = null;
+		else {
+			if (CargoRobotFeatures.FEATURE_CRANE_SAFE_STACKING_OF_BOXES.isActive()) {
+				if (warehouse.isCapacityAvailable(location)) {
+					warehouse.putBox(location, box);
+					box = null;
+				}
+			}
+			else {
+				warehouse.putBox(location, box);
+				box = null;
+			}
 		}
 	}
 

@@ -3,6 +3,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNull;
 import org.testng.annotations.Test;
 
+import com.github.verhagen.tutorial.cargorobot.CargoRobotFeatures;
+
 public class ColumnTest {
 
 	@Test
@@ -23,6 +25,7 @@ public class ColumnTest {
 		column.put(box);
 
 		assertEquals(box, column.get());
+		assertNull(column.get());
 	}
 
 	@Test
@@ -30,17 +33,24 @@ public class ColumnTest {
 		Box box0 = new Box(BoxType.A, 0);
 		Box box1 = new Box(BoxType.A, 1);
 		Column column = new Column(2);
+		assertEquals(column.getCapacity(), 2);
+		assertEquals(column.getAvailableCapacity(), 2);
 		column.put(box0);
 		column.put(box1);
+		assertEquals(column.getCapacity(), 2);
+		assertEquals(column.getAvailableCapacity(), 0);
 		column.put(null);
+		assertEquals(column.getCapacity(), 2);
+		assertEquals(column.getAvailableCapacity(), 0);
 
-		Box expected = column.get();
-		assertEquals(box1, expected);
-		expected = column.get();
-		assertEquals(box0, expected);
+		assertEquals(column.get(), box1);
+		assertEquals(column.get(), box0);
+		assertNull(column.get());
+		assertEquals(column.getCapacity(), 2);
+		assertEquals(column.getAvailableCapacity(), 2);
 	}
 
-	@Test( expectedExceptions = { ColumnCapacityException.class } )
+	@Test
 	public void addThreeBoxes() throws Exception {
 		Box box0 = new Box(BoxType.A, 0);
 		Box box1 = new Box(BoxType.A, 1);
@@ -48,7 +58,23 @@ public class ColumnTest {
 		Column column = new Column(2);
 		column.put(box0);
 		column.put(box1);
-		column.put(box2);
+		if (CargoRobotFeatures.FEATURE_CRANE_SAFE_STACKING_OF_BOXES.isActive()) {
+			try {
+				assertEquals(column.getAvailableCapacity(), 0);
+				column.put(box2);
+			}
+			catch (ColumnCapacityException cce) {
+				assertEquals(cce.getMessage(), "Column capacity '2' is already reached.");
+				assertEquals(column.getAvailableCapacity(), 0);
+			}
+		}
+		else {
+			assertEquals(column.getAvailableCapacity(), 0);
+			column.put(box2);
+			assertEquals(column.getAvailableCapacity(), -1);
+			column.put(new Box(BoxType.A, 3));
+			assertEquals(column.getAvailableCapacity(), -2);
+		}
 	}
 
 	@Test
