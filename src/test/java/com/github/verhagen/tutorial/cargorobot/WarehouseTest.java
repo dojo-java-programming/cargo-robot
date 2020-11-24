@@ -67,9 +67,9 @@ public class WarehouseTest {
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("D");
 		// FIXME [20161019 TV] Correct BoxFactory, should create serialNo 0 for each new Warehouse. 
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  '7'");  // FIXME 5 should be 1
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  box-number: '0'");  // FIXME 5 should be 1
 		warehouse.execute("R");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '7'");  // FIXME 5 should be 1
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");  // FIXME 5 should be 1
 		warehouse.execute("D");
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
 		content = warehouse.toString();
@@ -96,9 +96,9 @@ public class WarehouseTest {
 		Assert.assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("D");
 		warehouse.execute("R");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '8'");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
 		warehouse.execute("D");
-		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  '8'");
+		Assert.assertEquals(warehouse.getCraneStatus(), "location '1'  box: 'A'  box-number: '0'");
 	}
 
 }

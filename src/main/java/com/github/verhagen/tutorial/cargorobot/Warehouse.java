@@ -12,6 +12,7 @@ public class Warehouse {
 	private final String originalFilling;
 	private final Crane crane;
 	private final Column[] columns;
+	private final BoxFactory boxFactory = new BoxFactory();
 
 	
 	public Warehouse(int width, int heigth, String filling) {
@@ -42,6 +43,7 @@ public class Warehouse {
 	 */
 	public void reset() {
 		clear();
+//		boxFactory.reset();
 
 		StringTokenizer tokenizer = new StringTokenizer(originalFilling, "\n");
 		LinkedList<String> rows = new LinkedList<>(); 
@@ -58,10 +60,10 @@ public class Warehouse {
 				}
 				
 				String boxTypeStr = row.substring(index, index + 1);
-				if (! boxTypeStr.equals(".")) {
+				if (! (".".equals(boxTypeStr) || " ".equals(boxTypeStr))) {
 					try {
 						BoxType boxType = BoxType.valueOf(boxTypeStr.toUpperCase());
-						Box box = BoxFactory.create(boxType);
+						Box box = boxFactory.create(boxType);
 						columns[index].put(box);
 					}
 					catch (IllegalArgumentException iae) {

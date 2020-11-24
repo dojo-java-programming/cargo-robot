@@ -1,10 +1,10 @@
 package com.github.verhagen.tutorial.cargorobot;
 
 public class BoxFactory {
-	private static int serialNo = 0;
+	private int serialNo = 0;
 
 
-	public static Box create(final BoxType type) {
+	public Box create(final BoxType type) {
 		return new Box(type, serialNo++);
 	}
 

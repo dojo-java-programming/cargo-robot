@@ -1,25 +1,33 @@
 package com.github.verhagen.tutorial.cargorobot;
 
+import static org.testng.Assert.assertEquals;
+
 import org.testng.annotations.Test;
 
 public class CraneTest {
 	
 	@Test
 	public void commandMoveRight() throws Exception {
-//		Warehouse warehouse = null;
 		int railLength = 4;
-//		Crane crane = new Crane(warehouse, railLength);
-//		crane.moveRight();
-		Warehouse warehouse = new Warehouse(3, railLength, "   ");
+		Warehouse warehouse = new Warehouse(railLength, 3, "ABBA");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("R");
+		assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
+		warehouse.execute("R");
+		assertEquals(warehouse.getCraneStatus(), "location '2'  no box");
+		warehouse.execute("R");
+		assertEquals(warehouse.getCraneStatus(), "location '3'  no box");
 	}
 
 	@Test
 	public void commandMoveLeft() throws Exception {
 		int railLength = 4;
-//		Crane crane = new Crane(warehouse, railLength, railLength -1);
 		Warehouse warehouse = new Warehouse(railLength, 3, "   ");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
+		warehouse.execute("R");
+		assertEquals(warehouse.getCraneStatus(), "location '1'  no box");
 		warehouse.execute("L");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 	}
 
 	@Test( expectedExceptions = { IllegalArgumentException.class } )
@@ -40,10 +48,12 @@ public class CraneTest {
 	@Test
 	public void commandDown() throws Exception {
 		int railLength = 1;
-		Warehouse warehouse = new Warehouse(railLength, 1, "A");
-//		Crane crane = new Crane(warehouse, railLength);
-//		crane.moveDown();
+		Warehouse warehouse = new Warehouse(railLength, 2, "A");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 		warehouse.execute("D");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  box: 'A'  box-number: '0'");
+		warehouse.execute("D");
+		assertEquals(warehouse.getCraneStatus(), "location '0'  no box");
 	}
 
 }

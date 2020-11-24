@@ -68,7 +68,7 @@ public class Crane {
 			bldr.append("no box");
 		}
 		else {
-			bldr.append("box: '").append(box.getType()).append("'  '").append(box.getSerialNo()).append("'");
+			bldr.append("box: '").append(box.getType()).append("'  box-number: '").append(box.getSerialNo()).append("'");
 		}
 		return bldr.toString();
 	}
