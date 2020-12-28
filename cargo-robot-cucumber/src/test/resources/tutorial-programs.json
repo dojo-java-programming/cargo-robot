@@ -1,0 +1,61 @@
+{
+  level: {
+    name: 'tutorial',
+    game: [
+      {
+        name: 'Cargo 101',
+        program: {
+        	R1: DRD
+        	R2:
+        	R3:
+        	R4:
+        }
+      }
+      {
+        name: 'Transporter',
+        program: {
+        	R1: DRD1
+        	R2:
+        	R3:
+        	R4:
+        }
+      }
+      {
+        name: 'Re-Curses',
+        program: {
+        	R1: DRDL1
+        	R2:
+        	R3:
+        	R4:
+        }
+      }
+      {
+        name: 'Inverter',
+        program: {
+        	R1: 2222R1
+        	R2: DRDL
+        	R3:
+        	R4:
+        }
+      }
+      {
+        name: 'From Beneath',
+        program: {
+        	R1: DR(A)R(Y)L(N)1
+        	R2:
+        	R3:
+        	R4:
+        }
+      }
+      {
+        name: 'Go Left',
+        program: {
+        	R1: R2221
+        	R2: DLDR
+        	R3:
+        	R4:
+        }
+      }
+    ]
+  }
+}

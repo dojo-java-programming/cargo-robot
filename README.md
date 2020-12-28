@@ -12,4 +12,19 @@ To get an idea of the App see some of the [videos](https://www.google.nl/search?
 
 ## TestNG
 
-This project uses [TestNG](http://testng.org) as Unit Testing library. 
+This project uses [TestNG](http://testng.org) as Unit Testing library.
+
+
+## Maven Modules
+
+- `cargo-robot-computer`  
+  The Computer must be programmed with the *Cargo Robot Language*  
+  The Computer sends Cargo Robot Commands to the Cargo Robot Simulator
+- `cargo-robot-core`  
+  Core module containing the Cargo Robot Simulator
+- `cargo-robot-cucumber`  
+  Functional features in form of scenarios  
+  For functional testing using [Behavior-Driven Development](https://en.wikipedia.org/wiki/Behavior-driven_development)
+- `cargo-robot-language`  
+  Cargo Robot Language written in [ANTLR](https://www.antlr.org/) v4  
+  Should be used to program the Cargo Robot Computer

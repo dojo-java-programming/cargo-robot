@@ -1,0 +1,114 @@
+{
+  level: {
+    name: 'tutorial',
+    game: [
+      {
+        name: 'Cargo 101',
+        tip: [
+          'Down, Right, Down'
+        ],
+        toolbox: RDL1234
+        filling: [
+          { row: 'A.' }
+        ],
+        goal: [
+          { row: '.A'}
+        ]
+      },
+      {
+        name: 'Transporter',
+        tip: [
+          'Reuse the solution from level 1 and loop through it.'
+        ],
+        shortestSolution: 4,
+        toolbox: RDL1234
+        filling: [
+          { row: 'A...' }
+        ],
+        goal: [
+          { row: '...A'}
+        ]
+      },
+      {
+        name: 'Re-Curses',
+        tip: [
+          'Move one crate to the right, go back to the original position, and then loop.'
+        ],
+        shortestSolution: 5,
+        toolbox: RDL1234
+        filling: [
+          { row: 'A...' },
+          { row: 'A...' },
+          { row: 'A...' },
+          { row: 'A...' }
+        ],
+        goal: [
+          { row: '...A'},
+          { row: '...A'},
+          { row: '...A'},
+          { row: '...A'}
+        ]
+      },
+      {
+        name: 'Inverter',
+        tip: [
+          'Move all four blocks one spot to the right, and repeat.'
+        ],
+        shortestSolution: 10,
+        toolbox: RDL1234
+        filling: [
+          { row: 'A.....' },
+          { row: 'B.....' },
+          { row: 'C.....' },
+          { row: 'D.....' }
+        ],
+        goal: [
+          { row: '.....A'},
+          { row: '.....B'},
+          { row: '.....C'},
+          { row: '.....D'}
+        ]
+      },
+      {
+        name: 'From Beneath',
+        tip: [
+          'Go right once if holding blue, twice if holding yellow, and left if holding none. Repeat'
+        ],
+        shortestSolution: 5,
+        toolbox: RDL1234BYNA
+        filling: [
+          { row: 'D..' },
+          { row: 'D..' },
+          { row: 'D..' },
+          { row: 'D..' },
+          { row: 'A..' }
+        ],
+        goal: [
+          { row: '...'},
+          { row: '.D.'},
+          { row: '.D.'},
+          { row: '.D.'},
+          { row: '.DA'}
+        ]
+      }
+      {
+        name: 'Go Left',
+        tip: [
+          'Move each pile to the left. Repeat.'
+        ],
+        shortestSolution: 9,
+        toolbox: RDL1234
+        filling: [
+          { row: '.CBD' },
+          { row: '.CBD' },
+          { row: '.CBD' }
+        ],
+        goal: [
+          { row: 'CBD.' },
+          { row: 'CBD.' },
+          { row: 'CBD.' }
+        ]
+      }
+    ]
+  }
+}

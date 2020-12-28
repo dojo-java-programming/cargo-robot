@@ -9,6 +9,9 @@
 
 	<modules>
 		<module>cargo-robot-core</module>
+		<module>cargo-robot-cucumber</module>
+		<module>cargo-robot-computer</module>
+		<module>cargo-robot-language</module>
 	</modules>
 
 	<dependencyManagement>
